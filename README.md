@@ -1,7 +1,7 @@
 <link rel="stylesheet" type="text/css" href="css/github.css"> 
  
 <h1 align="center"> 
-  <img src="images/L6_RelayRattler_Schematic.PNG" alt="Relay Rattler Schematic" width="75%" align="middle">
+  <img src="images/L6_RelayRattler_Logo.png" alt="Relay Rattler Logo" width="75%" align="middle">
 </h1> 
 
 ## Relay Rattler
