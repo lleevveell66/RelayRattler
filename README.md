@@ -87,7 +87,7 @@ For every relay that you want to add, you will need the entire relay circuit: K1
 
 The MicroPython code for this is fairly straight-forward.  There are two pieces which bear explanation.  
 
-First, there is how we are checking for use of the rotary encoder.  CLK will signal that a change has occured, then DT will be low (0) if the knob turned counter-clockwise or high (1) if it turned clockwise.  We save some effort by just setting both the current relay and the timing delay, no matter which mode we are in.  The SW line will signal that the knob was pressed.  As this happens, we rotate through modes 1, 2, and 3.
+First, there is how we are checking for use of the rotary encoder.  CLK will signal that a change has occured, then DT will be low (0) if the knob turned counter-clockwise or high (1) if it turned clockwise.  We save some effort by just setting both the current relay and the timing delay, no matter which mode we are in.  The SW line will signal that the knob was pressed.  As this happens, we cycle through modes 1, 2, and 3.
 
 If you find that you are stuck in a strange spot, where the delay is very high, and your input in not being recognized, try to push the knob to get back into Mode 1, where the timing will no longer affect the reading of the values.  Then turn the knob counter-clockwise a few times, and go back to the pattern mode you want.  This is the downside of using only timing to do all of this.  The more proper way would be to use asyncio and allow some things to run while others wait.  But, that complicates the code and I really wanted to this to be very simple and easy for anyone to play around on.   I may write it up in a proper version, later, and include that in this repo.   If you want to fork it and do so, I'm all for it.
 
@@ -100,7 +100,7 @@ pattern1Array=[[1,0,0,0,0,0,0,0],[0,1,0,0,0,0,0,0],[0,0,1,0,0,0,0,0],[0,0,0,1,0,
                [0,0,1,0,0,0,0,0],[0,1,0,0,0,0,0,0],[1,0,0,0,0,0,0,0],[1,1,1,1,1,1,1,1]]
 ```
 
-You notice that this is a 2-dimensional array (list), with 16 "steps" of 8 "relay values" each.  The first step in this pattern is [1,0,0,0,0,0,0,0] and means that only the first relay should turn on, the rest off.  In the next step, [0,1,0,0,0,0,0,0], the second relay is on, the rest off.  This continues all the way to the end, or the eighth relay, then returns backwards, finally ending on step 16, [1,1,1,1,1,1,1,1] which triggers all relays on for a big "crack".  Well, as big as this gets, anyway.  Inside the noise box, the difference is discernable as a clear accent on step 16, especially on certain speeds.
+You notice that this is a 2-dimensional array (list), with 16 "steps" of 8 "relay values" each.  The first step in this pattern is [1,0,0,0,0,0,0,0] and means that only the first relay should turn on, the rest off.  In the next step, [0,1,0,0,0,0,0,0], the second relay is on, the rest off.  This continues all the way to the end, or the eighth relay, then returns backwards, finally ending on step 16, [1,1,1,1,1,1,1,1] which triggers all relays on for a big "crack".  Well, as big as this gets, anyway.  Inside the Noise Box, the difference is discernable as a clear accent on step 16, especially on certain speeds.
 
 The code keeps track of which step it is on via the patternStep variable.  
 
@@ -116,11 +116,11 @@ Simply apply power to the Pico, and everything should begin to work.  There is n
 
 The 16-step pattern in Mode 2 is a very simple one that will trigger the relays one-at-a-time, up then back down the array, ending on an "all on".  The 16-step pattern in Mode 3 was an attempt to get a "boom-tiss-snap-tiss" pattern, accented on the first step, by triggering different patterns of multiple relays at the same time.
 
-If you are using this inside of a noise box, you will probably want to mount the knob on top, then run proper power through a hole in the back.  I have only yet draped them in and have gotten really great sounds out of this.  Here is the first "song" I made using it as a ryhtmic backing to a dark, ambient minimal work: https://www.youtube.com/watch?v=33oogY_21sU .  It is that soft "clockworks" sound you hear throughout most of that song.
+If you are using this inside of a Noise Box, you will probably want to mount the knob on top, then run proper power through a hole in the back.  I have only yet draped them in and have gotten really great sounds out of this.  Here is the first "song" I made using it as a ryhtmic backing to a dark, ambient minimal work: https://www.youtube.com/watch?v=33oogY_21sU .  It is that soft "clockworks" sound you hear throughout most of that song.
 
 ### Other Ideas:
 
-The most obviously immediate idea is to expand this up to 12, 16, even 32 relays, to see when the delay tricks break down and asyncio needs to be used.  Could one go for more identifiable percussive sounds, using 32?   What if one used 16 large and 16 small relays?  Could one conjor up the "tiss" of a closed hihat?  The "snap" of a snare sidestick?
+The most obviously immediate idea is to expand this up to 12, 16, even 32 relays, to see when the delay tricks break down and asyncio needs to be used.  Could one go for more identifiable percussive sounds, using 32?   What if one used 16 large and 16 small relays?  Could one conjour up the "tiss" of a closed hihat?  The "snap" of a snare sidestick?
 
 One thing I will be exploring further is how the arrangement of these 16 relays in the bottom of the box can affect the sound.  Could putting them into a circle, with the pick-up piezo mic in one far corner give a sort of "doppler effect", as they traveled around in a circle?  Or, does doppler effect only happen when sounds travels through the air?  Could more and less volume be controlled by arrangement?
 
@@ -150,9 +150,12 @@ You will need the following hardware to duplicate this project, although much su
 ## Build:
 [Table of Contents](#table-of-contents)
 
+More to come... for now, check the images directory for photos of my breadboard layout using two relay circuits.
+
 ### Hardware:
 
+More to come...
 
 ### Software:
 
-
+More to come...
