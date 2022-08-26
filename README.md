@@ -116,7 +116,7 @@ Simply apply power to the Pico, and everything should begin to work.  There is n
 
 The 16-step pattern in Mode 2 is a very simple one that will trigger the relays one-at-a-time, up then back down the array, ending on an "all on".  The 16-step pattern in Mode 3 was an attempt to get a "boom-tiss-snap-tiss" pattern, accented on the first step, by triggering different patterns of multiple relays at the same time.
 
-If you are using this inside of a Noise Box, you will probably want to mount the knob on top, then run proper power through a hole in the back.  I have only yet draped them in and have gotten really great sounds out of this.  Here is the first "song" I made using it as a ryhtmic backing to a dark, ambient minimal work: https://www.youtube.com/watch?v=33oogY_21sU .  It is that soft "clockworks" sound you hear throughout most of that song.
+If you are using this inside of a Noise Box, you will probably want to mount the knob on top, then run proper power through a hole in the back.  I have only yet draped them in on a breadboard and have gotten really great sounds out of this.  Here is the first "song" I made using it as a ryhtmic backing to a dark, ambient minimal work: https://www.youtube.com/watch?v=33oogY_21sU .  It is that soft "clockworks" sound you hear throughout most of that song.  I can imagine they are only going to get better as I get this properly built on some PCB and mount them upside down so that all the relays are touching the bottom of the box, directly.
 
 ### Other Ideas:
 
