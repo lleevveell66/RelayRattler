@@ -40,7 +40,7 @@ Relay Rattler was built as an addition to a new "noise box" I am building.  I ju
 ## Theory of Operation:
 [Table of Contents](#table-of-contents)
 
-We will refer to the following diagram for this explaination:
+We will refer to the following diagram for this explanation:
 
 <h1 align="center"> 
   <img src="images/L6_RelayRattler_Schematic.PNG" alt="Relay Rattler Schematic" width="75%" align="middle">
@@ -50,13 +50,13 @@ We will refer to the following diagram for this explaination:
 
 The most important thing to remember about this project is that no load is being triggered on the other side of the relays.  We are only turning the relays on/off in patterns without driving anything else.  So, a minimal voltage is required.  The 5V relays I am using have been working fine using only the 3V3 rail of the Pico.  
 
-U1 is of course the microcontroller which contains all of the programming for this.
+U1 is of course the microcontroller (the Pico, in this case) which contains all of the programming for this.
 
 SW1 is a rotary encoder knob module that translates continuous knob rotation into bits to be translated to "clockwise" or "counter-clockwise" on the Pico via the "DT" and "CLK" lines.  The knob also has a push switch function which triggers the SW line.  The knobs I used are rated for 5V, but have been fine with the 3V3 of the Pico.
 
 K1 is the relay.  You might need to use a meter or small battery to hit pins and figure out which two will trigger the coil inside.  If you have access to a datasheet, that may also tell you.  Schematic symbols are odd and it is difficult to find an exact match for off-brands, so don't go by this one.  I found that mine had three pins on one side (the side with the dot for pin 1), and two pins on the opposite end.  I determined that two of the three pins on the pin 1 side worked the coil.  I had to bend over the middle pin to get it to fit well in the breadboard.
 
-Here are what my relays look like:
+Here are what my relays look like before bending that middle pin down:
 
 <h1 align="center"> 
   <img src="images/L6_RelayRattler_RelayTop.jpeg" alt="Relay Rattler Relay Top" width="30%" align="middle">
@@ -73,9 +73,9 @@ R1 is just any high-ish value (I used 10K) resistor that is being used as a "pul
 
 R2 is a lower valued (150) resistor which is just limiting current through the LED so it doesn't burn out too soon.  It could have probably been a slightly higher value (I didn't look amber up in charts), but this should do well, since these are not on for very long, and we are really dealing with such low currents on the Pico.  (Can you tell I am not en electronic engineer?)
 
-D2 happens to be an amber LED I had handy.  There are charts you can look LEDs up on to get a better idea what currents they need and then use Ohm's Law to figure out R2 more precisely.  This usually depends on the elements they are doped with (color).  But, the ranges are 100-220 ohms for 5V, typically.  If these start to burn out on me, I will put up more detail on that.  Since the Relay Rattler will live inside an enclosed Noice Box, I'm not especially concern if they burn out.  They were only used for development, to know where I was on the array as I twisted the knob.
+D2 happens to be an amber LED I had handy.  There are charts you can look LEDs up on to get a better idea what currents they need and then use Ohm's Law to figure out R2 more precisely.  This usually depends on the elements they are doped with (color).  But, the ranges are 100-220 ohms for 5V, typically.  If these start to burn out on me, I will put up more detail on that.  Since the Relay Rattler will live inside an enclosed Noise Box, I'm not especially concerned if they burn out.  They were only used for development, to know where I was on the array as I twisted the knob.
 
-All "Pico GND" connections should be connected together on a common rail.  If 5V is used to power the Pico, this will also be used for the rest of the relay circuit.  Since the rotary knob is using the dedicated 3V3 pin, you want all of these things referenced from the same 0.
+All "Pico GND" connections should be connected together on a common rail.  If 5V is used to power the Pico, this will also be used for the rest of the relay circuit.  Since the rotary knob is using the dedicated 3V3 pin, you want all of these voltages referenced from the same 0.
 
 All "Pico VSYS" connections should similarly be connected to the same rail.
 
@@ -93,7 +93,8 @@ If you find that you are stuck in a strange spot, where the delay is very high, 
 
 Secondly, there is how we handle the pre-programmed patterns in Mode 2 and Mode 3.  Let's break down how the first pattern works, and you should understand enough to build your own.  The first pattern (played in Mode 2) is pre-defined as:
 
-```pattern1Array=[[1,0,0,0,0,0,0,0],[0,1,0,0,0,0,0,0],[0,0,1,0,0,0,0,0],[0,0,0,1,0,0,0,0],
+```
+pattern1Array=[[1,0,0,0,0,0,0,0],[0,1,0,0,0,0,0,0],[0,0,1,0,0,0,0,0],[0,0,0,1,0,0,0,0],
                [0,0,0,0,1,0,0,0],[0,0,0,0,0,1,0,0],[0,0,0,0,0,0,1,0],[0,0,0,0,0,0,0,1],
                [0,0,0,0,0,0,1,0],[0,0,0,0,0,1,0,0],[0,0,0,0,1,0,0,0],[0,0,0,1,0,0,0,0],
                [0,0,1,0,0,0,0,0],[0,1,0,0,0,0,0,0],[1,0,0,0,0,0,0,0],[1,1,1,1,1,1,1,1]]
