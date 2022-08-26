@@ -63,6 +63,24 @@ Here are what my relays look like:
   <img src="images/L6_RelayRattler_RelayBottom.jpeg" alt="Relay Rattler Relay Bottom" width="30%" align="middle">
 </h1> 
 
+So, that middle pin on the left side in the photo on the right was simply bent down flat.  You could likely snip it, for this.
+
+D1 is a general purpose 1N4007 diode.  You don't need anything super fast/fancy, here.  The purpose of this diode is to block any flyback current from the coil (as it switches off and the coil discharges) from reaching the Pico and blowing out the GPIO.  
+
+Q1 is a generic BJT NPN 2N3904 transistor.  This is being used to logically switch the relay coil on/off, as well as an LED, using the GPIO pin data we send.
+
+R1 is just any high-ish value (I used 10K) resistor that is being used as a "pull-down" to keep the circuit in a default off state.  You never want to leave the base pin of a transistor "floating" in an unknown state, and since we want these relays to default to off, we use a "pull-down".
+
+R2 is a lower valued (150) resistor which is just limiting current through the LED so it doesn't burn out too soon.  It could have probably been a slightly higher value (I didn't look amber up in charts), but this should do well, since these are not on for very long, and we are really dealing with such low currents on the Pico.  (Can you tell I am not en electronic engineer?)
+
+D2 happens to be an amber LED I had handy.  There are charts you can look LEDs up on to get a better idea what currents they need and then use Ohm's Law to figure out R2 more precisely.  This usually depends on the elements they are doped with (color).  But, the ranges are 100-220 ohms for 5V, typically.  If these start to burn out on me, I will put up more detail on that.  Since the Relay Rattler will live inside an enclosed Noice Box, I'm not especially concern if they burn out.  They were only used for development, to know where I was on the array as I twisted the knob.
+
+All "Pico GND" connections should be connected together on a common rail.  If 5V is used to power the Pico, this will also be used for the rest of the relay circuit.  Since the rotary knob is using the dedicated 3V3 pin, you want all of these things referenced from the same 0.
+
+All "Pico VSYS" connections should similarly be connected to the same rail.
+
+The "Pico GP3-10" connections are just one relay per GPIO pin on the Pico, for 8 relays, thus 3 through 10.  If you add more, you can continue on up GP22, if you like.  Just remember that your code will need to change to know about these pins, as well.   As the code stands, you can get up to 8 relays going at once.
+
 ### Software Components:
 
 
