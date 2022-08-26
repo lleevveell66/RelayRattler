@@ -48,13 +48,35 @@ We will refer to the following diagram for this explaination:
 
 ### Hardware Components:
 
+The most important thing to remember about this project is that no load is being triggered on the other side of the relays.  We are only turning the relays on/off in patterns without driving anything else.  So, a minimal voltage is required.  The 5V relays I am using have been working fine using only the 3V3 rail of the Pico.  
 
+U1 is of course the microcontroller which contains all of the programming for this.
+
+SW1 is a rotary encoder knob module that translates continuous knob rotation into bits to be translated to "clockwise" or "counter-clockwise" on the Pico via the "DT" and "CLK" lines.  The knob also has a push switch function which triggers the SW line.  The knobs I used are rated for 5V, but have been fine with the 3V3 of the Pico.
+
+K1 is the relay.  You might need to use a meter or small battery to hit pins and figure out which two will trigger the coil inside.  If you have access to a datasheet, that may also tell you.  Schematic symbols are odd and it is difficult to find an exact match for off-brands, so don't go by this one.  I found that mine had three pins on one side (the side with the dot for pin 1), and two pins on the opposite end.  I determined that two of the three pins on the pin 1 side worked the coil.  I had to bend over the middle pin to get it to fit well in the breadboard.
+
+Here are what my relays look like:
+
+<h1 align="center"> 
+  <img src="images/L6_RelayRattler_RelayTop.jpeg" alt="Relay Rattler Relay Top" width="30%" align="middle">
+  <img src="images/L6_RelayRattler_RelayBottom.jpeg" alt="Relay Rattler Relay Bottom" width="30%" align="middle">
+</h1> 
 
 ### Software Components:
 
 
 ### Usage:
 
+Simply apply power to the Pico, and everything should begin to work.  There is no on/off control.  The program will default to "Mode 1", which allows the user to turn the rotary encoder left and right to rifle up and down the relay array as fast/slow as they like.  Pushing the rotary encoder knob will change modes in "Mode 2" and "Mode 3" (more to come!).  In these modes, the rotary encoder left/right turns into a speed control for the pre-programmed 16-step patterns.  Here is a breakdown of the modes:
+
+* Mode 1 - Spin the knob clockwise/counter-clockwise to manually rifle up/down the relays
+* Mode 2 - Spin the knob clockwise to raise the delay or counter-clockwise to shorten the delay in the repeating 16-step pattern.
+* Mode 3 - Spin the knob clockwise to raise the delay or counter-clockwise to shorten the delay in the repeating 16-step pattern.
+
+The 16-step pattern in Mode 2 is a very simple one that will trigger the relays one-at-a-time, up then back down the array, ending on an "all on".  The 16-step pattern in Mode 3 was an attempt to get a "boom-tiss-snap-tiss" pattern, accented on the first step, by triggering different patterns of multiple relays at the same time.
+
+If you are using this inside of a noise box, you will probably want to mount the knob on top, then run proper power through a hole in the back.  I have only yet draped them in and have gotten really great sounds out of this.  Here is the first "song" I made using it as a ryhtmic backing to a dark, ambient minimal work: https://www.youtube.com/watch?v=33oogY_21sU .  It is that soft "clockworks" sound you hear throughout most of that song.
 
 ### Other Ideas:
 
