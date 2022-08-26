@@ -81,8 +81,29 @@ All "Pico VSYS" connections should similarly be connected to the same rail.
 
 The "Pico GP3-10" connections are just one relay per GPIO pin on the Pico, for 8 relays, thus 3 through 10.  If you add more, you can continue on up GP22, if you like.  Just remember that your code will need to change to know about these pins, as well.   As the code stands, you can get up to 8 relays going at once.
 
+For every relay that you want to add, you will need the entire relay circuit: K1, D1, D2, Q1, R1, and R2.  So, if you want 8 relays going like this, you will need 8 of each of those and enough breadboard to wire it all up.
+
 ### Software Components:
 
+The MicroPython code for this is fairly straight-forward.  There are two pieces which bear explanation.  
+
+First, there is how we are checking for use of the rotary encoder.  CLK will signal that a change has occured, then DT will be low (0) if the knob turned counter-clockwise or high (1) if it turned clockwise.  We save some effort by just setting both the current relay and the timing delay, no matter which mode we are in.  The SW line will signal that the knob was pressed.  As this happens, we rotate through modes 1, 2, and 3.
+
+If you find that you are stuck in a strange spot, where the delay is very high, and your input in not being recognized, try to push the knob to get back into Mode 1, where the timing will no longer affect the reading of the values.  Then turn the knob counter-clockwise a few times, and go back to the pattern mode you want.  This is the downside of using only timing to do all of this.  The more proper way would be to use asyncio and allow some things to run while others wait.  But, that complicates the code and I really wanted to this to be very simple and easy for anyone to play around on.   I may write it up in a proper version, later, and include that in this repo.   If you want to fork it and do so, I'm all for it.
+
+Secondly, there is how we handle the pre-programmed patterns in Mode 2 and Mode 3.  Let's break down how the first pattern works, and you should understand enough to build your own.  The first pattern (played in Mode 2) is pre-defined as:
+
+```pattern1Array=[[1,0,0,0,0,0,0,0],[0,1,0,0,0,0,0,0],[0,0,1,0,0,0,0,0],[0,0,0,1,0,0,0,0],
+               [0,0,0,0,1,0,0,0],[0,0,0,0,0,1,0,0],[0,0,0,0,0,0,1,0],[0,0,0,0,0,0,0,1],
+               [0,0,0,0,0,0,1,0],[0,0,0,0,0,1,0,0],[0,0,0,0,1,0,0,0],[0,0,0,1,0,0,0,0],
+               [0,0,1,0,0,0,0,0],[0,1,0,0,0,0,0,0],[1,0,0,0,0,0,0,0],[1,1,1,1,1,1,1,1]]
+```
+
+You notice that this is a 2-dimensional array (list), with 16 "steps" of 8 "relay values" each.  The first step in this pattern is [1,0,0,0,0,0,0,0] and means that only the first relay should turn on, the rest off.  In the next step, [0,1,0,0,0,0,0,0], the second relay is on, the rest off.  This continues all the way to the end, or the eighth relay, then returns backwards, finally ending on step 16, [1,1,1,1,1,1,1,1] which triggers all relays on for a big "crack".  Well, as big as this gets, anyway.  Inside the noise box, the difference is discernable as a clear accent on step 16, especially on certain speeds.
+
+The code keeps track of which step it is on via the patternStep variable.  
+
+Every iteration of the main loop, we first turn all relays off, then check for any new knob change by the user, and finally, if we are in Mode 2 or Mode 3, we go ahead and run the next step of the appropriate pattern.
 
 ### Usage:
 
